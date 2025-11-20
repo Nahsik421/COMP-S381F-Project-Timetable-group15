@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Timetable Entries</title>
+</head>
+<body>
+    <h1>Timetable Entries</h1>
+    <ul>
+        <% if (entries.length) { %>
+            <% entries.forEach(entry => { %>
+                <li>
+		    <strong><%= entry.subject %></strong> - <%= entry.day %> <%= entry.month %> <%= entry.date %><br>
+                    <small><%= entry.startTime %> to <%= entry.endTime %></small><br>
+                    <a href="/timetable/<%= entry._id %>/details">Details</a> |
+                    <a href="/timetable/<%= entry._id %>/edit">Edit</a> |			 
+                    <a href="/timetable/<%= entry._id %>/delete">Delete</a>
+                    </form>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li>No timetable entries found.</li>
+        <% } %>
+    </ul>
+    <a href="/create">Create New Entry</a> | 
+    <a href="/logout">Logout</a> 
+</body>
+</html>
+
+<% /* This section is just for myself, for the future me to re-read the code/where I got it found them.
+ The whole code is just if for statement in a loop <li>(list) ends at </li> (list), in English term, 
+if lens(dataset)>0: 
+	for i in dataset 
+		print(i) 
+else: 
+ print('no timetable')
+
+i being the value and the key, just a semi pseudo code, honestly, inside the print should be like print(i['subject'...) or something, but no brain power right now to make it full writing.
+*/ %>

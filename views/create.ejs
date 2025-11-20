@@ -1,0 +1,28 @@
+<html>
+	<body>
+    		<h1>Welcome, <%= user %>!</h1>
+    		<h1>Create Timetable Entry</h1>
+    		<form action="/timetable" method="POST">
+        		<label for="subject">Subject:</label>
+        		<input type="text" name="subject" required><br>
+        		<label for="day">Day:</label>
+        		<input type="text" name="day" required><br>
+        		<label for="month">Month:</label>
+        		<input type="text" name="month" required><br>
+        		<label for="date">Date:</label>
+        		<input type="number" name="date" min="1" max="31" required><br>
+        		<label for="startTime">Start Time:</label>
+        		<input type="text" name="startTime" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Please enter time in HH:MM format (e.g., 23:49)" placeholder="HH:MM" required><br>
+        		<label for="endTime">End Time:</label>
+        		<input type="text" name="endTime" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Please enter time in HH:MM format (e.g., 23:49)" placeholder="HH:MM" required><br>
+        		<button type="submit">Create</button>
+    		</form>
+    	<a href="/timetable">Back to Timetable</a>
+	</body>
+</html>
+
+<% /* This section is just for myself, for the future me to re-read the code/where I got it found them. Most of them are learned from project and w3schools, lable tag, 
+
+as for the pattern, it's form https://stackoverflow.com/questions/7536755/regular-expression-for-matching-hhmm-time-format, /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,HH being 0-9,10-19, and 20-23, and the MM, 0-5,0-9. going by military hour, side note, the required attribute(from w3schools when learning input) it forces the user to must input in order to processed. 
+
+ */ %>

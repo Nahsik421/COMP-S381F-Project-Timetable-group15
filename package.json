@@ -1,0 +1,17 @@
+{
+    "name": "timetable",
+    "description": "COMP S381F timetable project",
+    "author": "group 15",
+    "version": "0.0.1",
+    "dependencies": {
+        "cookie-session": "^2.1.1",
+        "ejs": "*",
+        "express": "^5.1.0",
+        "mongodb": "6.9.0",
+        "nodemon": "*"
+    },
+    "engine": "node >= 16.0.0",
+    "scripts": {
+        "start": "node server"
+    }
+}

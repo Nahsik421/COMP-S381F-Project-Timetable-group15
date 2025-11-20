@@ -1,0 +1,15 @@
+<html>
+	<body>
+    		<h1>Timetable Entry Details</h1>
+	
+    			<h2><%= entry.subject %></h2>
+    			<p><strong>Day:</strong> <%= entry.day %> <%= entry.month %> <%= entry.date %></p>
+   			<p><strong>Time:</strong> <%= entry.startTime %> to <%= entry.endTime %></p>
+    			<a href="/timetable/<%= entry._id %>/edit">Edit</a> |
+    			<a href="/timetable/<%= entry._id %>/delete">Delete</a>|
+    			</form>
+
+    		<a href="/timetable">Back to Timetable</a> | 
+    		<a href="/logout">Logout</a>
+	</body>
+</html>

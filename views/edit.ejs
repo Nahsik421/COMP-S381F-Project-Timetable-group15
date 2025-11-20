@@ -1,0 +1,21 @@
+<html>
+	<body>
+    		<h1>Edit Timetable Entry</h1>
+    			<form action="/timetable/<%= entry._id %>/update" method="POST">
+        			<label for="subject">Subject:</label>
+        			<input type="text" name="subject" value="<%= entry.subject %>" required><br>
+        			<label for="day">Day:</label>
+        			<input type="text" name="day" value="<%= entry.day %>" required><br>
+        			<label for="month">Month:</label>
+        			<input type="text" name="month" value="<%= entry.month %>" required><br>
+        			<label for="date">Date:</label>
+        			<input type="number" name="date" min="1" max="31" value="<%= entry.date %>" required><br>
+        			<label for="startTime">Start Time:</label>
+        			<input type="text" name="startTime" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Please enter time in HH:MM format (e.g., 14:30)" placeholder="HH:MM" value="<%= entry.startTime %>" required><br>
+        			<label for="endTime">End Time:</label>
+        			<input type="text" name="endTime" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Please enter time in HH:MM format (e.g., 14:30)" placeholder="HH:MM" value="<%= entry.endTime %>" required><br>
+        			<button type="submit">Save Changes</button>
+    			</form>
+    		<a href="/timetable">Back to Timetable</a>
+	</body>
+</html>
