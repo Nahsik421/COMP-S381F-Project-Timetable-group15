@@ -28,7 +28,7 @@ async function connectDB() {
     await client.connect();
     return client.db(dbName).collection(collectionName);
 }
-
+// webpage and login
 app.get('/', (req, res) => {
     if (!req.session.authenticated) {
         res.redirect('/login');
@@ -142,7 +142,91 @@ app.get('/create', (req, res) => {
     const user = req.session.username;
     res.render('create', { user });
 });
+// RESTful
+app.get('/api/timetable', async (req, res) => {
+    if (req.session.userId) {
+        console.log(req.body);  
+        const collection = await connectDB(); 
+        const entries = await collection.find({ userId: req.session.userId }).toArray();
+        res.status(200).json(entries);  
+    } else {
+        res.status(401).json({ message: "Unauthorized API access" });
+    }
+});
+
+
+app.post('/api/timetable', async (req, res) => {
+    if (req.session.userId) { 
+        console.log(req.body);
+
+        const newEntry = {
+            subject: req.body.subject,
+            day: req.body.day,
+            month: req.body.month,
+            date: req.body.date,
+            startTime: req.body.startTime,
+            endTime: req.body.endTime,
+            userId: req.session.userId
+        };
+        
+        const collection = await connectDB();
+        const result = await collection.insertOne(newEntry);
+        res.status(201).json({ 
+            message: "Entry created successfully", 
+            id: result.insertedId, 
+            data: newEntry 
+        });
+    } else {
+        res.status(401).json({ message: "Unauthorized API access" });
+    }
+});
+
+app.put('/api/timetable/:id', async (req, res) => {
+    if (req.session.userId) { 
+        console.log(req.body);
+
+        const updatedData = {
+            subject: req.body.subject,
+            day: req.body.day,
+            month: req.body.month,
+            date: req.body.date,
+            startTime: req.body.startTime,
+            endTime: req.body.endTime
+        };
+
+        const collection = await connectDB();
+        const result = await collection.updateOne(
+            { _id: new ObjectId(req.params.id), userId: req.session.userId },
+            { $set: updatedData }
+        );
+        res.status(200).json({ 
+            message: "Entry updated successfully", 
+            id: req.params.id, 
+            updatedData: updatedData 
+        });
+    } else {
+        res.status(401).json({ message: "Unauthorized API access" });
+    }
+});
+
+app.delete('/api/timetable/:id', async (req, res) => {
+    if (req.session.userId) { 
+        console.log(req.body);
+
+        collection = await connectDB();
+        const result = await collection.deleteOne({ 
+            _id: new ObjectId(req.params.id),
+            userId: req.session.userId
+        });
+        res.status(200).json({ 
+            message: "Entry Delete successfully" 
+        });
+    } else {
+        res.status(401).json({ message: "Unauthorized API access" });
+    }
+});
 
 app.listen(process.env.PORT || 8099, () => {
     console.log("Server is running on port 8099");
 });
+
