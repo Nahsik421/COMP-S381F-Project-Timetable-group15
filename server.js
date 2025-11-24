@@ -155,6 +155,21 @@ app.get('/api/timetable', async (req, res) => {
     }
 });
 
+// Read for one ID(get)
+app.get('/api/timetable/:id', async (req, res) => {
+    if (req.session.userId) {
+        const collection = await connectDB(); 
+        const entry = await collection.findOne({ 
+            _id: new ObjectId(req.params.id), 
+            userId: req.session.userId 
+        });
+        res.status(200).send(JSON.stringify(entry, null, 5));
+    } else {
+        res.status(401).json({ message: "Unauthorized API access" });
+    }
+});
+
+
 // Create(post)
 app.post('/api/timetable', async (req, res) => {
     if (req.session.userId) { 
@@ -230,6 +245,7 @@ app.delete('/api/timetable/:id', async (req, res) => {
 app.listen(process.env.PORT || 8099, () => {
     console.log("Server is running on port 8099");
 });
+
 
 
 
