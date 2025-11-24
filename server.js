@@ -149,7 +149,7 @@ app.get('/api/timetable', async (req, res) => {
         console.log(req.body);  
         const collection = await connectDB(); 
         const entries = await collection.find({ userId: req.session.userId }).toArray();
-        res.status(200).send(JSON.stringify(entries));  
+        res.status(200).send(JSON.stringify(entries, null, 5));  
     } else {
         res.status(401).json({ message: "Unauthorized API access" });
     }
@@ -176,7 +176,7 @@ app.post('/api/timetable', async (req, res) => {
             message: "Entry created successfully", 
             id: result.insertedId, 
             data: newEntry 
-        }));
+        }, null, 5));
     } else {
         res.status(401).json({ message: "Unauthorized API access" });
     }
@@ -204,7 +204,7 @@ app.put('/api/timetable/:id', async (req, res) => {
             message: "Entry updated successfully", 
             id: req.params.id, 
             updatedData 
-        }));
+        }, null, 5));
     } else {
         res.status(401).json({ message: "Unauthorized API access" });
     }
@@ -230,5 +230,6 @@ app.delete('/api/timetable/:id', async (req, res) => {
 app.listen(process.env.PORT || 8099, () => {
     console.log("Server is running on port 8099");
 });
+
 
 
