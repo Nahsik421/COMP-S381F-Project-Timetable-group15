@@ -143,18 +143,19 @@ app.get('/create', (req, res) => {
     res.render('create', { user });
 });
 // RESTful
+// Read(get)
 app.get('/api/timetable', async (req, res) => {
     if (req.session.userId) {
         console.log(req.body);  
         const collection = await connectDB(); 
         const entries = await collection.find({ userId: req.session.userId }).toArray();
-        res.status(200).json(entries);  
+        res.status(200).send(JSON.stringify(entries));  
     } else {
         res.status(401).json({ message: "Unauthorized API access" });
     }
 });
 
-
+// Create(post)
 app.post('/api/timetable', async (req, res) => {
     if (req.session.userId) { 
         console.log(req.body);
@@ -171,16 +172,16 @@ app.post('/api/timetable', async (req, res) => {
         
         const collection = await connectDB();
         const result = await collection.insertOne(newEntry);
-        res.status(201).json({ 
+        res.status(201).send(JSON.stringify({ 
             message: "Entry created successfully", 
             id: result.insertedId, 
             data: newEntry 
-        });
+        }));
     } else {
         res.status(401).json({ message: "Unauthorized API access" });
     }
 });
-
+// Update (put)
 app.put('/api/timetable/:id', async (req, res) => {
     if (req.session.userId) { 
         console.log(req.body);
@@ -199,16 +200,16 @@ app.put('/api/timetable/:id', async (req, res) => {
             { _id: new ObjectId(req.params.id), userId: req.session.userId },
             { $set: updatedData }
         );
-        res.status(200).json({ 
+        res.status(200).send(JSON.stringify({ 
             message: "Entry updated successfully", 
             id: req.params.id, 
-            updatedData: updatedData 
-        });
+            updatedData 
+        }));
     } else {
         res.status(401).json({ message: "Unauthorized API access" });
     }
 });
-
+// Delete (delete)
 app.delete('/api/timetable/:id', async (req, res) => {
     if (req.session.userId) { 
         console.log(req.body);
@@ -218,9 +219,9 @@ app.delete('/api/timetable/:id', async (req, res) => {
             _id: new ObjectId(req.params.id),
             userId: req.session.userId
         });
-        res.status(200).json({ 
-            message: "Entry Delete successfully" 
-        });
+        res.status(200).send(JSON.stringify({ 
+            message: "Entry deleted successfully" 
+        }));
     } else {
         res.status(401).json({ message: "Unauthorized API access" });
     }
@@ -229,4 +230,5 @@ app.delete('/api/timetable/:id', async (req, res) => {
 app.listen(process.env.PORT || 8099, () => {
     console.log("Server is running on port 8099");
 });
+
 
